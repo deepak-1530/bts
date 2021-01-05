@@ -55,7 +55,7 @@ parser.add_argument('--encoder',                   type=str,   help='type of enc
                                                                     'resnet101_bts, resnet50_bts, resnext50_bts or resnext101_bts',
                                                                default='densenet161_bts')
 # Dataset
-parser.add_argument('--dataset',                   type=str,   help='dataset to train on, kitti or nyu', default='nyu')
+parser.add_argument('--dataset',                   type=str,   help='dataset to train on, kitti, nyu or diode', default='nyu')
 parser.add_argument('--data_path',                 type=str,   help='path to the data', required=True)
 parser.add_argument('--gt_path',                   type=str,   help='path to the groundtruth data', required=True)
 parser.add_argument('--filenames_file',            type=str,   help='path to the filenames text file', required=True)
@@ -446,7 +446,7 @@ def main_worker(gpu, ngpus_per_node, args):
 
             lpg8x8, lpg4x4, lpg2x2, reduc1x1, depth_est = model(image, focal)
 
-            if args.dataset == 'nyu':
+            if args.dataset == 'nyu' or args.dataset == 'diode':
                 mask = depth_gt > 0.1
             else:
                 mask = depth_gt > 1.0
